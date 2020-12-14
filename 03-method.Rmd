@@ -1,3 +1,47 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 # Methods
 
+```{r setup}
+library(tidyverse)
+library(readxl)
+library(modelsummary)
+
+```
+
+
+
 We describe our methods in this chapter.
+
+
+Describe what data we have, and what it represents
+
+Table \@ref(tab:storm-table)
+
+```{r ReadData} 
+#can put extra options in here, such as a figure title in the chunk options
+
+Storm <- read_xlsx("Data/Storm_Severity.xlsx")
+Speed <- read_excel("Data/iPeMs.xlsx")
+
+```
+
+```{r storm-table}
+#this is the table for the output data
+
+datasummary_skim(Storm, title = "Distribution of Numeric Variables in Storm Data")
+#shows mean, SD, min, median, max, histogram
+
+
+```
+
+```{r summaryofstormdata}
+
+datasummary_skim(Storm, type="categorical", title = "Distribution of Categorial Variables in Data")
+#the title is the caption
+
+```
+

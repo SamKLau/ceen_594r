@@ -40,8 +40,27 @@ datasummary_skim(Storm, title = "Distribution of Numeric Variables in Storm Data
 
 ```{r summaryofstormdata}
 
-datasummary_skim(Storm, type="categorical", title = "Distribution of Categorial Variables in Data")
 #the title is the caption
+#put the comments above the figure being printed!
+datasummary_skim(Storm %>%select("Storm Rating"=Adj_Rating, RWIS_Site), 
+                 type="categorical", 
+                 title = "Distribution of Categorial Variables in Data")
+
+
+```
+
+```{r speed-table}
+
+datasummary_skim(Speed,
+                 title = "Distirbution of Numeric Varaibles in Storm Data")
+
+```
+
+```{r summaryofspeeddata}
+
+datasummary_skim(Speed %>%select(Segment, "Time of Day"=Time_Period, "Weather Type"=Date_Type),
+                 type = "categorical",
+                 title = "Distribution of Categorical Variables in Data")
 
 ```
 

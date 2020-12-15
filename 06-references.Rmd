@@ -1,3 +1,20 @@
 `r if (knitr::is_html_output()) '
 # References {-}
 '`
+Black, A. W. and Mote, T. L. (2015). “Effects of Winter Precipitation on Automobile Collisions, 	Injuries, and Fatalities in the United States.” _J. Trans. Geog._, Elsevier, 48, 165–175.
+
+Cambridge Systematics, Inc., and Texas Transportation Institute. (2004). “Traffic Congestion and Reliability: Linking Solutions to Problems.” Federal Highway Administration. <https://ops.fhwa.dot.gov/congestion_report_04/congestion_report.pdf> (Jun. 23, 2020).
+
+Federal Highway Administration (FHWA). (2020a). “How Do Weather Events Impact Roads?” <https://ops.fhwa.dot.gov/weather/q1_roadimpact.htm> (Jun. 23, 2020).
+
+Federal Highway Administration (FHWA). (2020b). “Snow and Ice.” <http://ops.fhwa.dot.gov
+/Weather/weather_events/snow_ice.htm> (Jun. 23, 2020).
+
+Hanbali, R.M. (1992). “Influence of Winter Road Maintenance on Traffic Accident Rates.” PhD dissertation, Marquette University, Milwaukee, WI.
+
+Holik, W. A., Crow, M., Schneider, W. H., and Miller, C. M. (2015). “The Impacts of Winter Maintenance Equipment on Vehicle Delay on Interstates.” _Int. J. Traf. Trans. Eng._, 5(3), 264-277.
+
+Hranac, R., Sterzin, E., Krechmer, D., Rakha, H., and Farzaneh, M. (2006). “Empirical Studies on Traffic Flow in Inclement Weather.” _Research Report No. FHWA-HOP-07-073_, Road Weather Management Program, Washington D.C.
+
+Schrank, D., and Lomax, T. (2007). “The 2007 Urban Mobility Report.” Texas Transportation Institute, Texas A&M University. < https://static.tti.tamu.edu/tti.tamu.edu/documents/
+umr/archive/mobility-report-2007-wappx.pdf> (Jun. 23, 2020).

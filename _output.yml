@@ -3,7 +3,8 @@ bookdown::gitbook:
   config:
     toc:
       before: |
-        <li><a href="./">Traffic Speeds and Winter Weather</a></li>
+        <li><a href="./">Traffic Speeds and Winter Weather
+        </a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
     download: ["pdf", "epub"]

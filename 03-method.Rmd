@@ -19,6 +19,16 @@ We describe our methods in this chapter.
 
 Describe what data we have, and what it represents
 
+Cleaning up the Data:
+
+Storm data
+Average data into 30 minute increments (both snowfall rate and storm severity index; include data/time & RWIS Site)
+If both snowfall rate and storm severity index are 0, then get rid of it
+Reassign storm severity index for <.25 as light, .25-1 as moderate and >1 as heavy
+
+Speed Data
+Average the data into 30 min increments (speed, Date/time, segment, Time_Period, weather type)
+
 Table \@ref(tab:storm-table)
 
 ```{r ReadData} 
@@ -64,3 +74,8 @@ datasummary_skim(Speed %>%select(Segment, "Time of Day"=Time_Period, "Weather Ty
 
 ```
 
+##how to do a table without datasummary
+
+|Threshold|Start Date|End Date|
+|---------|----------|--------|
+Can start a new row here

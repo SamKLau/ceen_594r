@@ -1,3 +1,9 @@
-# Final Words
+# Conclusion and Acknowledgements
 
-We have finished a nice book.
+**Conclusion**
+
+Conclusion
+
+**Acknowledgment**
+
+The authors thank the Utah Department of Transportation for support and funding for this research. S. Lau downloaded and analyzed the data and wrote the text, M. Shoaf downloaded and helped analyze the data, D. Eggett helped perform statistical analysis on the data, and G. Schultz supervised the work and assisted as needed.

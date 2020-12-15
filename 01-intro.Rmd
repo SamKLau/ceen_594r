@@ -1,5 +1,16 @@
 # Introduction {#intro}
 
+Each year, 70 percent of all roadway networks, as well as 70 percent of the population in the United States, experience 5 or more inches of snow (FHWA 2020b). These storms create poor driving conditions, including icy roads and poor visibility. Various studies have been conducted in multiple locations to determine speed reductions. The Federal Highway Administration (FHWA) has found that average speeds decline on snowy and slushy pavements on arterials and freeways. The reduced visibility and traction during a winter storm not only decreases driving speeds, but also increases headway and reduces vehicle acceleration. This leads to a decrease in the effectiveness of traffic signal plans and roadway capacity (FHWA 2020a).
+
+Safety is also of great concern during winter weather conditions. The FHWA reported that each year in the United States, 24 percent of weather-related crashes happen on snowy, slushy, or icy pavement (FHWA 2020b). State Departments of Transportation (DOTs) often partner in various research studies to determine how to improve safety on their networks.
+
+Although research has been done in other snowy states to assess impacts of winter weather on traffic speeds and safety, minimal research has been executed in Utah in these areas. As the population within the state continues to grow, the Utah Department of Transportation (UDOT) has continued to place great importance on timely maintenance during these winter storms. UDOT’s winter maintenance goal each year is to minimize fatalities and maintain network flow. State officials need accurate studies for this region to know the impacts of their snow removal program on traffic speeds and crash rates to provide safer roads for their citizens.
+
+The objective of this research is to find the impacts of winter weather on traffic speeds and safety in Utah, especially in the Salt Lake City metropolitan area. Five routes were chosen in the Salt Lake Valley to analyze, including West 9000 South, East 9000 South, Redwood Road, 700 East, and Foothill Drive. The data collected are from the 2019-2020 winter weather season. The following sections provide background information of the project, a description of procedures followed, discussion of results found, and conclusions drawn.
+
+
+
+
 Put a picture here with the different routes of my project
 
 You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods).

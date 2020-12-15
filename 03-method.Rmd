@@ -76,6 +76,8 @@ datasummary_skim(Speed %>%select(Segment, "Time of Day"=Time_Period, "Weather Ty
 
 ##how to do a table without datasummary
 
+Define how segments line up with RWIS sites (TABLE HERE)
+
 |Threshold|Start Date|End Date|
 |---------|----------|--------|
 Can start a new row here

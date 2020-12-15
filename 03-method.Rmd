@@ -81,3 +81,22 @@ Define how segments line up with RWIS sites (TABLE HERE)
 |Threshold|Start Date|End Date|
 |---------|----------|--------|
 Can start a new row here
+
+The data were collected from a variety of sources for this study to analyze storm severity, traffic speeds, and crash rates for arterials in the Salt Lake Valley. These arterials include West 9000 South, East 9000 South, Redwood Road, 700 East, and Foothill Drive. Figure 1 shows the location of the arterials. The data were collected for the 2019-2020 winter weather season. 
+
+**Data Types**
+
+The winter weather data was collected from UDOT’s Road Weather Information System (RWIS) locations. These sites are placed around Utah and are used to help understand weather and road conditions in various locations. Various information is gathered at these sites, such as wind speed, snowfall rate, air temperature, surface temperature, surface status, surface snow depth, and dew point. This information is gathered for each RWIS site every 10 minutes. These values are used by the organization to calculate a Storm Intensity Index (SII). These SII values were categorized to show storm severity; “light” was defined as a SII value of less than 0.25, “moderate” was defined as SII values ranging from 0.25 to 1, and “heavy” was defined for any SII value over 1. These definitions for storm severity were given by UDOT weather employees.
+
+As found from UDOT’s RWIS sites, the data from days that snowfall took place were downloaded from each of the RWIS sites that correlate to selected routes. Weather personnel at UDOT suggested which RWIS sites to use for each route. Table 3 contains which routes correlate to the selected RWIS sites. Each route was broken into segments by UDOT maintenance sheds, to provide more accurate weather data for each part of a route.
+
+Traffic data were gathered using UDOT’s contract with Iteris through iPeMs. This data are collected with Bluetooth data that can be gathered from certain car brands. Iteris gathers this data for each route and for each 15-minute increment, where the average traffic speed is determined on the created route. The data were collected for each day the RWIS site reported there to be a snow storm. To assess the impacts of these storms on traffic speeds, a sample of normal weather days were taken during the same winter season to find average speeds that were not affected by weather. With this baseline average, the speeds during winter storms were compared and effects were determined.
+
+Crash reports were collected using UDOT’s contract with Numetric. These data were from a combination of police reports, UDOT safety reports, and other analyses of crashes. Crash information was collected for the analyzed routes for each day of a snow storm. The information gathered included milepost, crash severity, manner of collision, roadway junction type, light condition, weather condition, roadway surface condition, and number of vehicles involved. The crash severity was used as the main focal point of the analysis, with categories including no injury, possible injury, suspected minor injury, and suspected major injury for this dataset.
+
+**Analysis**
+
+The analysis performed was done in statistical software. The datasets were correlated together to find results. Traffic speed data were used to compare normal versus snow days to determine the effect of snow storms on traffic speeds. Storm severity was then compared to weather data to determine the effects of levels of severity on traffic speeds.
+
+A similar analysis was done for crash data. Crash data were compared to weather data to analyze the frequency of crashes per storm severity level. The crash data were also compared with traffic data. The comparison of the three datasets showed the interaction between storm severity, traffic speed, and crash rates. 
+

@@ -4,8 +4,8 @@ The effects of winter storms are extensive. Each winter storm event brings costs
 
 **Table 1. Traffic Flow Reductions on Freeways due to Winter Weather (FHWA 2020a)**
 
-|Weather Conditions|Freeway Traffic Flow Reductions|
-|------------------|-------------------------------|
+|Weather Conditions|Freeway Traffic Flow Reductions|--|--|--|
+|-------|-----------|-----|------------|--------------|
 | |Average Speed (%)|Free Flow Speed (%)|Volume (%)|Capacity (%)|
 |Light Rain/Snow|3 - 13|2 - 13|5 - 10|4 - 11|
 |Heavy Snow|5 - 40|5 - 64|30 - 44|12 - 27|

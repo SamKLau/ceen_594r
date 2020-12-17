@@ -2,11 +2,10 @@
 
 Some _significant_ applications are demonstrated in this chapter.
 
-## Example one
 
-## Example two
+The datasets were correlated together to find results. Traffic speed data were used to compare normal versus snow days to determine the effect of snow storms on traffic speeds. Storm severity was then compared to weather data to determine the effects of levels of severity on traffic speeds.
 
-
+A similar analysis was done for crash data. Crash data were compared to weather data to analyze the frequency of crashes per storm severity level. The crash data were also compared with traffic data. The comparison of the three datasets showed the interaction between storm severity, traffic speed, and crash rates. 
 
 
 ##Goal: Compare speed and storm data

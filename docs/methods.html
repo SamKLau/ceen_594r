@@ -24,7 +24,7 @@
 <meta name="author" content="Samantha K. Lau, E.I.T; Mason Shoaf, E.I.T; Dennis L. Eggett, Ph.D; Grant G. Schultz, Ph.D, P.E., PTOE" />
 
 
-<meta name="date" content="2020-12-16" />
+<meta name="date" content="2020-12-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -141,10 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
 <li class="chapter" data-level="3" data-path="literature.html"><a href="literature.html"><i class="fa fa-check"></i><b>3</b> Literature</a></li>
 <li class="chapter" data-level="4" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>4</b> Methods</a></li>
-<li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a><ul>
-<li class="chapter" data-level="5.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>5.1</b> Example one</a></li>
-<li class="chapter" data-level="5.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>5.2</b> Example two</a></li>
-</ul></li>
+<li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a></li>
 <li class="chapter" data-level="6" data-path="conclusion-and-acknowledgements.html"><a href="conclusion-and-acknowledgements.html"><i class="fa fa-check"></i><b>6</b> Conclusion and Acknowledgements</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -169,7 +166,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="methods" class="section level1">
 <h1><span class="header-section-number">Chapter 4</span> Methods</h1>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="methods.html#cb3-1"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
+<p>These libraries are needed to perform R functions throughout the chapter.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="methods.html#cb1-1"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## -- Attaching packages ------------------------------------------------ tidyverse 1.3.0 --</code></pre>
 <pre><code>## v ggplot2 3.3.2     v purrr   0.3.4
 ## v tibble  3.0.3     v dplyr   1.0.2
@@ -178,76 +176,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## -- Conflicts --------------------------------------------------- tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="methods.html#cb7-1"></a><span class="kw">library</span>(readxl)</span>
-<span id="cb7-2"><a href="methods.html#cb7-2"></a><span class="kw">library</span>(modelsummary)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="methods.html#cb5-1"></a><span class="kw">library</span>(readxl)</span>
+<span id="cb5-2"><a href="methods.html#cb5-2"></a><span class="kw">library</span>(modelsummary)</span></code></pre></div>
 <pre><code>## Warning: package &#39;modelsummary&#39; was built under R version 4.0.3</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="methods.html#cb9-1"></a><span class="kw">library</span>(lubridate)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="methods.html#cb7-1"></a><span class="kw">library</span>(lubridate)</span></code></pre></div>
 <pre><code>## 
 ## Attaching package: &#39;lubridate&#39;</code></pre>
 <pre><code>## The following objects are masked from &#39;package:base&#39;:
 ## 
 ##     date, intersect, setdiff, union</code></pre>
-<p>We describe our methods in this chapter.</p>
-<p>Describe what data we have, and what it represents</p>
-<p>Cleaning up the Data:</p>
-<p>Storm data
-Average data into 30 minute increments (both snowfall rate and storm severity index; include data/time &amp; RWIS Site)
-If both snowfall rate and storm severity index are 0, then get rid of it
-Reassign storm severity index for &lt;.25 as light, .25-1 as moderate and &gt;1 as heavy</p>
-<p>Speed Data
-Average the data into 30 min increments (speed, Date/time, segment, Time_Period, weather type)</p>
-<p>Table <a href="methods.html#tab:storm-table">4.1</a></p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="methods.html#cb12-1"></a><span class="co">#can put extra options in here, such as a figure title in the chunk options</span></span>
-<span id="cb12-2"><a href="methods.html#cb12-2"></a></span>
-<span id="cb12-3"><a href="methods.html#cb12-3"></a>Storm &lt;-<span class="st"> </span><span class="kw">read_xlsx</span>(<span class="st">&quot;Data/Storm_Severity.xlsx&quot;</span>)</span>
-<span id="cb12-4"><a href="methods.html#cb12-4"></a>Speed &lt;-<span class="st"> </span><span class="kw">read_xlsx</span>(<span class="st">&quot;Data/iPeMs.xlsx&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="methods.html#cb13-1"></a>storm_hour &lt;-<span class="st"> </span>Storm <span class="op">%&gt;%</span></span>
-<span id="cb13-2"><a href="methods.html#cb13-2"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
-<span id="cb13-3"><a href="methods.html#cb13-3"></a>    <span class="dt">date =</span> <span class="kw">date</span>(SampleTime),</span>
-<span id="cb13-4"><a href="methods.html#cb13-4"></a>    <span class="dt">hour =</span> <span class="kw">hour</span>(SampleTime)</span>
-<span id="cb13-5"><a href="methods.html#cb13-5"></a>  ) <span class="op">%&gt;%</span></span>
-<span id="cb13-6"><a href="methods.html#cb13-6"></a><span class="st">  </span><span class="kw">group_by</span>(RWIS_Site, date, hour) <span class="op">%&gt;%</span></span>
-<span id="cb13-7"><a href="methods.html#cb13-7"></a><span class="st">  </span><span class="kw">summarise</span>(</span>
-<span id="cb13-8"><a href="methods.html#cb13-8"></a>    <span class="dt">s_intensity =</span> <span class="kw">mean</span>(StormIntensityIndex, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</span>
-<span id="cb13-9"><a href="methods.html#cb13-9"></a>    <span class="dt">snowfall =</span> <span class="kw">mean</span>(SnowfallRate, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb13-10"><a href="methods.html#cb13-10"></a>  )</span></code></pre></div>
-<pre><code>## `summarise()` regrouping output by &#39;RWIS_Site&#39;, &#39;date&#39; (override with `.groups` argument)</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="methods.html#cb15-1"></a>speed_hour &lt;-<span class="st"> </span>Speed <span class="op">%&gt;%</span><span class="st">  </span><span class="kw">mutate</span>(</span>
-<span id="cb15-2"><a href="methods.html#cb15-2"></a>    <span class="dt">date =</span> <span class="kw">date</span>(<span class="st">`</span><span class="dt">Date/Time</span><span class="st">`</span>),</span>
-<span id="cb15-3"><a href="methods.html#cb15-3"></a>    <span class="dt">hour =</span> <span class="kw">hour</span>(<span class="st">`</span><span class="dt">Date/Time</span><span class="st">`</span>)</span>
-<span id="cb15-4"><a href="methods.html#cb15-4"></a>  ) <span class="op">%&gt;%</span></span>
-<span id="cb15-5"><a href="methods.html#cb15-5"></a><span class="st">  </span><span class="kw">group_by</span>(Segment, date, hour) <span class="op">%&gt;%</span></span>
-<span id="cb15-6"><a href="methods.html#cb15-6"></a><span class="st">  </span><span class="kw">summarise</span>(</span>
-<span id="cb15-7"><a href="methods.html#cb15-7"></a>    <span class="dt">Speed =</span> <span class="kw">mean</span>(Speed, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</span>
-<span id="cb15-8"><a href="methods.html#cb15-8"></a>    <span class="dt">Speed_Limit =</span> <span class="kw">mean</span>(Speed_Limit, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb15-9"><a href="methods.html#cb15-9"></a>  )</span></code></pre></div>
-<pre><code>## `summarise()` regrouping output by &#39;Segment&#39;, &#39;date&#39; (override with `.groups` argument)</code></pre>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="methods.html#cb17-1"></a><span class="co">#create csv in excel called Definition</span></span>
-<span id="cb17-2"><a href="methods.html#cb17-2"></a>segment_xwalk &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
-<span id="cb17-3"><a href="methods.html#cb17-3"></a>  <span class="dt">Segment =</span> <span class="kw">c</span>(<span class="st">&quot;W 9000 S&quot;</span>,<span class="st">&quot;E 9000 S&quot;</span>,<span class="st">&quot;Redwood&quot;</span>,<span class="st">&quot;Redwood&quot;</span>,<span class="st">&quot;Redwood&quot;</span>,<span class="st">&quot;700 E&quot;</span>,<span class="st">&quot;700 E&quot;</span>,<span class="st">&quot;Foothill&quot;</span>),</span>
-<span id="cb17-4"><a href="methods.html#cb17-4"></a>  <span class="dt">RWIS_Site =</span> <span class="kw">c</span>(<span class="st">&quot;SR-85@DannonWay&quot;</span>,<span class="st">&quot;I-15@6200S&quot;</span>,<span class="st">&quot;I-15@6200S&quot;</span>,<span class="st">&quot;I-15@500S&quot;</span>,<span class="st">&quot;I-15@2400S&quot;</span>,<span class="st">&quot;I-15@6200S&quot;</span>,<span class="st">&quot;I-15@2400S&quot;</span>,<span class="st">&quot;I-80@MouthofParleys&quot;</span>)</span>
-<span id="cb17-5"><a href="methods.html#cb17-5"></a>)</span>
-<span id="cb17-6"><a href="methods.html#cb17-6"></a></span>
-<span id="cb17-7"><a href="methods.html#cb17-7"></a>segment_xwalk <span class="op">%&gt;%</span></span>
-<span id="cb17-8"><a href="methods.html#cb17-8"></a><span class="st">  </span><span class="kw">left_join</span>(storm_hour, <span class="dt">by =</span> <span class="st">&quot;RWIS_Site&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb17-9"><a href="methods.html#cb17-9"></a><span class="st">  </span><span class="kw">left_join</span>(speed_hour, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;Segment&quot;</span>,<span class="st">&quot;date&quot;</span>,<span class="st">&quot;hour&quot;</span>))</span></code></pre></div>
-<pre><code>## # A tibble: 9,026 x 8
-##    Segment  RWIS_Site    date        hour s_intensity snowfall Speed Speed_Limit
-##    &lt;chr&gt;    &lt;chr&gt;        &lt;date&gt;     &lt;int&gt;       &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt;
-##  1 W 9000 S SR-85@Danno~ 2019-10-27     0           0   0       37.3          40
-##  2 W 9000 S SR-85@Danno~ 2019-10-27     1           0   0       38.4          40
-##  3 W 9000 S SR-85@Danno~ 2019-10-27     2           0   0       36.8          40
-##  4 W 9000 S SR-85@Danno~ 2019-10-27     3           0   0       37.6          40
-##  5 W 9000 S SR-85@Danno~ 2019-10-27     4           0   0       37.1          40
-##  6 W 9000 S SR-85@Danno~ 2019-10-27     5           0   0.0850  36.8          40
-##  7 W 9000 S SR-85@Danno~ 2019-10-27     6           0   0.198   36.7          40
-##  8 W 9000 S SR-85@Danno~ 2019-10-27     7           0   0       36            40
-##  9 W 9000 S SR-85@Danno~ 2019-10-27     8           0   0       36.4          40
-## 10 W 9000 S SR-85@Danno~ 2019-10-27     9           0   0       34.6          40
-## # ... with 9,016 more rows</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="methods.html#cb19-1"></a><span class="co">#this is the table for the output data</span></span>
-<span id="cb19-2"><a href="methods.html#cb19-2"></a></span>
-<span id="cb19-3"><a href="methods.html#cb19-3"></a><span class="kw">datasummary_skim</span>(Storm, <span class="dt">title =</span> <span class="st">&quot;Distribution of Numeric Variables in Storm Data&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="methods.html#cb10-1"></a>Storm &lt;-<span class="st"> </span><span class="kw">read_xlsx</span>(<span class="st">&quot;Data/Storm_Severity.xlsx&quot;</span>)</span>
+<span id="cb10-2"><a href="methods.html#cb10-2"></a>Speed &lt;-<span class="st"> </span><span class="kw">read_xlsx</span>(<span class="st">&quot;Data/iPeMs.xlsx&quot;</span>)</span></code></pre></div>
+<p>The data were collected from a variety of sources for this study to analyze storm severity and traffic speeds for arterials in the Salt Lake Valley. These arterials include West 9000 South, East 9000 South, Redwood Road, 700 East, and Foothill Drive. Figure 1 shows the location of the arterials. The data were collected for the 2019-2020 winter weather season.</p>
+<p><strong>Data Types</strong></p>
+<p>The winter weather data was collected from UDOT’s Road Weather Information System (RWIS) locations. These sites are placed around Utah and are used to help understand weather and road conditions in various locations. Various information is gathered at these sites, such as wind speed, snowfall rate, air temperature, surface temperature, surface status, surface snow depth, and dew point. This information is gathered for each RWIS site every 10 minutes. These values are used by the organization to calculate a Storm Intensity Index (SII). A brief synopsis of these values is shown in Table <a href="methods.html#tab:storm-table">4.1</a>.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="methods.html#cb11-1"></a><span class="kw">datasummary_skim</span>(Storm, <span class="dt">title =</span> <span class="st">&quot;Distribution of Numeric Variables in Storm Data&quot;</span>)</span></code></pre></div>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
 <span id="tab:storm-table">Table 4.1: </span>Distribution of Numeric Variables in Storm Data
@@ -563,12 +506,10 @@ DewPoint
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="methods.html#cb20-1"></a><span class="co">#shows mean, SD, min, median, max, histogram</span></span></code></pre></div>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="methods.html#cb21-1"></a><span class="co">#the title is the caption</span></span>
-<span id="cb21-2"><a href="methods.html#cb21-2"></a><span class="co">#put the comments above the figure being printed!</span></span>
-<span id="cb21-3"><a href="methods.html#cb21-3"></a><span class="kw">datasummary_skim</span>(Storm <span class="op">%&gt;%</span><span class="kw">select</span>(<span class="st">&quot;Storm Rating&quot;</span>=Adj_Rating, RWIS_Site), </span>
-<span id="cb21-4"><a href="methods.html#cb21-4"></a>                 <span class="dt">type=</span><span class="st">&quot;categorical&quot;</span>, </span>
-<span id="cb21-5"><a href="methods.html#cb21-5"></a>                 <span class="dt">title =</span> <span class="st">&quot;Distribution of Categorial Variables in Data&quot;</span>)</span></code></pre></div>
+<p>These SII values were categorized to show storm severity; “light” was defined as a SII value of less than 0.25, “moderate” was defined as SII values ranging from 0.25 to 1, and “heavy” was defined for any SII value over 1. These definitions for storm severity were given by UDOT weather employees and a summary of the data is shown in Table <a href="methods.html#tab:summaryofstormdata">4.2</a>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="methods.html#cb12-1"></a><span class="kw">datasummary_skim</span>(Storm <span class="op">%&gt;%</span><span class="kw">select</span>(<span class="st">&quot;Storm Rating&quot;</span>=Adj_Rating, RWIS_Site), </span>
+<span id="cb12-2"><a href="methods.html#cb12-2"></a>                 <span class="dt">type=</span><span class="st">&quot;categorical&quot;</span>, </span>
+<span id="cb12-3"><a href="methods.html#cb12-3"></a>                 <span class="dt">title =</span> <span class="st">&quot;Distribution of Categorial Variables in Data&quot;</span>)</span></code></pre></div>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
 <span id="tab:summaryofstormdata">Table 4.2: </span>Distribution of Categorial Variables in Data
@@ -696,11 +637,13 @@ RWIS_Site
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="methods.html#cb22-1"></a><span class="kw">datasummary_skim</span>(Speed,</span>
-<span id="cb22-2"><a href="methods.html#cb22-2"></a>                 <span class="dt">title =</span> <span class="st">&quot;Distirbution of Numeric Varaibles in Storm Data&quot;</span>)</span></code></pre></div>
+<p>As found from UDOT’s RWIS sites, the data from days that snowfall took place were downloaded from each of the RWIS sites that correlate to selected routes. The data was cleaned up using R. Weather personnel at UDOT suggested which RWIS sites to use for each route, which is included in the code below. Each route was broken into segments by UDOT maintenance sheds, to provide more accurate weather data for each part of a route.</p>
+<p>Traffic data were gathered using UDOT’s contract with Iteris through iPeMs. This data are collected with Bluetooth data that can be gathered from certain car brands. Iteris gathers this data for each route and for each 15-minute increment, where the average traffic speed is determined on the created route. The data were collected for each day the RWIS site reported there to be a snow storm. A summary of the data is found in Table <a href="methods.html#tab:speed-table">4.3</a>. To assess the impacts of these storms on traffic speeds, a sample of normal weather days were taken during the same winter season to find average speeds that were not affected by weather. With this baseline average, the speeds during winter storms were compared and effects were determined. Overall statistical data can be found in Table <a href="methods.html#tab:summaryofspeeddata">4.4</a></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="methods.html#cb13-1"></a><span class="kw">datasummary_skim</span>(Speed,</span>
+<span id="cb13-2"><a href="methods.html#cb13-2"></a>                 <span class="dt">title =</span> <span class="st">&quot;Distirbution of Numeric Varaibles in Speed Data&quot;</span>)</span></code></pre></div>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:speed-table">Table 4.3: </span>Distirbution of Numeric Varaibles in Storm Data
+<span id="tab:speed-table">Table 4.3: </span>Distirbution of Numeric Varaibles in Speed Data
 </caption>
 <thead>
 <tr>
@@ -858,12 +801,12 @@ Hour
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="methods.html#cb23-1"></a><span class="kw">datasummary_skim</span>(Speed <span class="op">%&gt;%</span><span class="kw">select</span>(Segment, <span class="st">&quot;Time of Day&quot;</span>=Time_Period, <span class="st">&quot;Weather Type&quot;</span>=Date_Type),</span>
-<span id="cb23-2"><a href="methods.html#cb23-2"></a>                 <span class="dt">type =</span> <span class="st">&quot;categorical&quot;</span>,</span>
-<span id="cb23-3"><a href="methods.html#cb23-3"></a>                 <span class="dt">title =</span> <span class="st">&quot;Distribution of Categorical Variables in Data&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="methods.html#cb14-1"></a><span class="kw">datasummary_skim</span>(Speed <span class="op">%&gt;%</span><span class="kw">select</span>(Segment, <span class="st">&quot;Time of Day&quot;</span>=Time_Period, <span class="st">&quot;Weather Type&quot;</span>=Date_Type),</span>
+<span id="cb14-2"><a href="methods.html#cb14-2"></a>                 <span class="dt">type =</span> <span class="st">&quot;categorical&quot;</span>,</span>
+<span id="cb14-3"><a href="methods.html#cb14-3"></a>                 <span class="dt">title =</span> <span class="st">&quot;Distribution of Categorical Variables in Speed Data&quot;</span>)</span></code></pre></div>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:summaryofspeeddata">Table 4.4: </span>Distribution of Categorical Variables in Data
+<span id="tab:summaryofspeeddata">Table 4.4: </span>Distribution of Categorical Variables in Speed Data
 </caption>
 <thead>
 <tr>
@@ -1132,29 +1075,51 @@ Weather
 </tr>
 </tbody>
 </table>
-<p>##how to do a table without datasummary</p>
-<p>Define how segments line up with RWIS sites (TABLE HERE)</p>
-<table>
-<thead>
-<tr class="header">
-<th>Threshold</th>
-<th>Start Date</th>
-<th>End Date</th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
-<p>Can start a new row here</p>
-<p>The data were collected from a variety of sources for this study to analyze storm severity, traffic speeds, and crash rates for arterials in the Salt Lake Valley. These arterials include West 9000 South, East 9000 South, Redwood Road, 700 East, and Foothill Drive. Figure 1 shows the location of the arterials. The data were collected for the 2019-2020 winter weather season.</p>
-<p><strong>Data Types</strong></p>
-<p>The winter weather data was collected from UDOT’s Road Weather Information System (RWIS) locations. These sites are placed around Utah and are used to help understand weather and road conditions in various locations. Various information is gathered at these sites, such as wind speed, snowfall rate, air temperature, surface temperature, surface status, surface snow depth, and dew point. This information is gathered for each RWIS site every 10 minutes. These values are used by the organization to calculate a Storm Intensity Index (SII). These SII values were categorized to show storm severity; “light” was defined as a SII value of less than 0.25, “moderate” was defined as SII values ranging from 0.25 to 1, and “heavy” was defined for any SII value over 1. These definitions for storm severity were given by UDOT weather employees.</p>
-<p>As found from UDOT’s RWIS sites, the data from days that snowfall took place were downloaded from each of the RWIS sites that correlate to selected routes. Weather personnel at UDOT suggested which RWIS sites to use for each route. Table 3 contains which routes correlate to the selected RWIS sites. Each route was broken into segments by UDOT maintenance sheds, to provide more accurate weather data for each part of a route.</p>
-<p>Traffic data were gathered using UDOT’s contract with Iteris through iPeMs. This data are collected with Bluetooth data that can be gathered from certain car brands. Iteris gathers this data for each route and for each 15-minute increment, where the average traffic speed is determined on the created route. The data were collected for each day the RWIS site reported there to be a snow storm. To assess the impacts of these storms on traffic speeds, a sample of normal weather days were taken during the same winter season to find average speeds that were not affected by weather. With this baseline average, the speeds during winter storms were compared and effects were determined.</p>
-<p>Crash reports were collected using UDOT’s contract with Numetric. These data were from a combination of police reports, UDOT safety reports, and other analyses of crashes. Crash information was collected for the analyzed routes for each day of a snow storm. The information gathered included milepost, crash severity, manner of collision, roadway junction type, light condition, weather condition, roadway surface condition, and number of vehicles involved. The crash severity was used as the main focal point of the analysis, with categories including no injury, possible injury, suspected minor injury, and suspected major injury for this data set.</p>
 <p><strong>Analysis</strong></p>
-<p>The analysis performed was done in statistical software. The datasets were correlated together to find results. Traffic speed data were used to compare normal versus snow days to determine the effect of snow storms on traffic speeds. Storm severity was then compared to weather data to determine the effects of levels of severity on traffic speeds.</p>
-<p>A similar analysis was done for crash data. Crash data were compared to weather data to analyze the frequency of crashes per storm severity level. The crash data were also compared with traffic data. The comparison of the three datasets showed the interaction between storm severity, traffic speed, and crash rates.</p>
+<p>The analysis performed was done using the code below. This cleaned up the data and combined the dataset to provide a place for analysis to begin.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="methods.html#cb15-1"></a>storm_hour &lt;-<span class="st"> </span>Storm <span class="op">%&gt;%</span></span>
+<span id="cb15-2"><a href="methods.html#cb15-2"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb15-3"><a href="methods.html#cb15-3"></a>    <span class="dt">date =</span> <span class="kw">date</span>(SampleTime),</span>
+<span id="cb15-4"><a href="methods.html#cb15-4"></a>    <span class="dt">hour =</span> <span class="kw">hour</span>(SampleTime)</span>
+<span id="cb15-5"><a href="methods.html#cb15-5"></a>  ) <span class="op">%&gt;%</span></span>
+<span id="cb15-6"><a href="methods.html#cb15-6"></a><span class="st">  </span><span class="kw">group_by</span>(RWIS_Site, date, hour) <span class="op">%&gt;%</span></span>
+<span id="cb15-7"><a href="methods.html#cb15-7"></a><span class="st">  </span><span class="kw">summarise</span>(</span>
+<span id="cb15-8"><a href="methods.html#cb15-8"></a>    <span class="dt">s_intensity =</span> <span class="kw">mean</span>(StormIntensityIndex, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</span>
+<span id="cb15-9"><a href="methods.html#cb15-9"></a>    <span class="dt">snowfall =</span> <span class="kw">mean</span>(SnowfallRate, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb15-10"><a href="methods.html#cb15-10"></a>  )</span></code></pre></div>
+<pre><code>## `summarise()` regrouping output by &#39;RWIS_Site&#39;, &#39;date&#39; (override with `.groups` argument)</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="methods.html#cb17-1"></a>speed_hour &lt;-<span class="st"> </span>Speed <span class="op">%&gt;%</span><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb17-2"><a href="methods.html#cb17-2"></a>    <span class="dt">date =</span> <span class="kw">date</span>(<span class="st">`</span><span class="dt">Date/Time</span><span class="st">`</span>),</span>
+<span id="cb17-3"><a href="methods.html#cb17-3"></a>    <span class="dt">hour =</span> <span class="kw">hour</span>(<span class="st">`</span><span class="dt">Date/Time</span><span class="st">`</span>)</span>
+<span id="cb17-4"><a href="methods.html#cb17-4"></a>  ) <span class="op">%&gt;%</span></span>
+<span id="cb17-5"><a href="methods.html#cb17-5"></a><span class="st">  </span><span class="kw">group_by</span>(Segment, date, hour) <span class="op">%&gt;%</span></span>
+<span id="cb17-6"><a href="methods.html#cb17-6"></a><span class="st">  </span><span class="kw">summarise</span>(</span>
+<span id="cb17-7"><a href="methods.html#cb17-7"></a>    <span class="dt">Speed =</span> <span class="kw">mean</span>(Speed, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</span>
+<span id="cb17-8"><a href="methods.html#cb17-8"></a>    <span class="dt">Speed_Limit =</span> <span class="kw">mean</span>(Speed_Limit, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb17-9"><a href="methods.html#cb17-9"></a>  )</span></code></pre></div>
+<pre><code>## `summarise()` regrouping output by &#39;Segment&#39;, &#39;date&#39; (override with `.groups` argument)</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="methods.html#cb19-1"></a>segment_xwalk &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
+<span id="cb19-2"><a href="methods.html#cb19-2"></a>  <span class="dt">Segment =</span> <span class="kw">c</span>(<span class="st">&quot;W 9000 S&quot;</span>,<span class="st">&quot;E 9000 S&quot;</span>,<span class="st">&quot;Redwood&quot;</span>,<span class="st">&quot;Redwood&quot;</span>,<span class="st">&quot;Redwood&quot;</span>,<span class="st">&quot;700 E&quot;</span>,<span class="st">&quot;700 E&quot;</span>,<span class="st">&quot;Foothill&quot;</span>),</span>
+<span id="cb19-3"><a href="methods.html#cb19-3"></a>  <span class="dt">RWIS_Site =</span> <span class="kw">c</span>(<span class="st">&quot;SR-85@DannonWay&quot;</span>,<span class="st">&quot;I-15@6200S&quot;</span>,<span class="st">&quot;I-15@6200S&quot;</span>,<span class="st">&quot;I-15@500S&quot;</span>,<span class="st">&quot;I-15@2400S&quot;</span>,<span class="st">&quot;I-15@6200S&quot;</span>,<span class="st">&quot;I-15@2400S&quot;</span>,<span class="st">&quot;I-80@MouthofParleys&quot;</span>)</span>
+<span id="cb19-4"><a href="methods.html#cb19-4"></a>)</span>
+<span id="cb19-5"><a href="methods.html#cb19-5"></a></span>
+<span id="cb19-6"><a href="methods.html#cb19-6"></a>segment_xwalk <span class="op">%&gt;%</span></span>
+<span id="cb19-7"><a href="methods.html#cb19-7"></a><span class="st">  </span><span class="kw">left_join</span>(storm_hour, <span class="dt">by =</span> <span class="st">&quot;RWIS_Site&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb19-8"><a href="methods.html#cb19-8"></a><span class="st">  </span><span class="kw">left_join</span>(speed_hour, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;Segment&quot;</span>,<span class="st">&quot;date&quot;</span>,<span class="st">&quot;hour&quot;</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 9,026 x 8
+##    Segment  RWIS_Site    date        hour s_intensity snowfall Speed Speed_Limit
+##    &lt;chr&gt;    &lt;chr&gt;        &lt;date&gt;     &lt;int&gt;       &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt;
+##  1 W 9000 S SR-85@Danno~ 2019-10-27     0           0   0       37.3          40
+##  2 W 9000 S SR-85@Danno~ 2019-10-27     1           0   0       38.4          40
+##  3 W 9000 S SR-85@Danno~ 2019-10-27     2           0   0       36.8          40
+##  4 W 9000 S SR-85@Danno~ 2019-10-27     3           0   0       37.6          40
+##  5 W 9000 S SR-85@Danno~ 2019-10-27     4           0   0       37.1          40
+##  6 W 9000 S SR-85@Danno~ 2019-10-27     5           0   0.0850  36.8          40
+##  7 W 9000 S SR-85@Danno~ 2019-10-27     6           0   0.198   36.7          40
+##  8 W 9000 S SR-85@Danno~ 2019-10-27     7           0   0       36            40
+##  9 W 9000 S SR-85@Danno~ 2019-10-27     8           0   0       36.4          40
+## 10 W 9000 S SR-85@Danno~ 2019-10-27     9           0   0       34.6          40
+## # ... with 9,016 more rows</code></pre>
 
 </div>
             </section>

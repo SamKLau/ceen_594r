@@ -54,7 +54,6 @@ datasummary_skim(Speed,
 datasummary_skim(Speed %>%select(Segment, "Time of Day"=Time_Period, "Weather Type"=Date_Type),
                  type = "categorical",
                  title = "Distribution of Categorical Variables in Speed Data")
-
 ```
 
 **Analysis**

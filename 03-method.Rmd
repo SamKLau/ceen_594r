@@ -9,6 +9,7 @@ editor_options:
 library(tidyverse)
 library(readxl)
 library(modelsummary)
+library(lubridate)
 
 ```
 
@@ -35,8 +36,77 @@ Table \@ref(tab:storm-table)
 #can put extra options in here, such as a figure title in the chunk options
 
 Storm <- read_xlsx("Data/Storm_Severity.xlsx")
-Speed <- read_excel("Data/iPeMs.xlsx")
+Speed <- read_xlsx("Data/iPeMs.xlsx")
+```
 
+
+```{r claen_storms}
+storm_hour <- Storm %>%
+  mutate(
+    date = date(SampleTime),
+    hour = hour(SampleTime)
+  ) %>%
+  group_by(RWIS_Site, date, hour) %>%
+  summarise(
+    s_intensity = mean(StormIntensityIndex, na.rm = TRUE),
+    snowfall = mean(SnowfallRate, na.rm = TRUE)
+  )
+```
+
+```{r clean_speeds}
+speed_hour <- Speed %>%  mutate(
+    date = date(`Date/Time`),
+    hour = hour(`Date/Time`)
+  ) %>%
+  group_by(Segment, date, hour) %>%
+  summarise(
+    Speed = mean(Speed, na.rm = TRUE),
+    Speed_Limit = mean(Speed_Limit, na.rm = TRUE)
+  )
+```
+
+```{r crosswalk of speed to weather}
+#create csv in excel called Definition
+segment_xwalk <- tibble(
+  Segment = c("4500 South"),
+  RWIS_Site = c("I-15@2400S")
+)
+
+segment_xwalk %>%
+  left_join(storm_hour, by = "RWIS_Site") %>%
+  left_join(speed_hour, by = c("Segment","date","hour"))
+
+```
+
+```{r claen_storms}
+####################################################
+storms_30 <- vector(mode = "list",length = length(unique(Storm$RWIS_Site)))
+iter2 <- 0
+for (j in unique(Storm$RWIS_Site)) {
+  iter2 <- iter2 + 1
+  a <- filter(Storm, RWIS_Site == j)
+  a <- a[c(1, 7, 14)]
+  b <- vector(length = length(seq(1, nrow(a), by = 3)))
+  iter <- 0
+  for (i in seq(1, nrow(a), by = 3)) {
+    iter <- iter + 1
+    b[iter] <- a$StormIntensityIndex[c(i:(i+2))] %>% mean()
+  }
+  bb <- as.data.frame(b)
+  bb$date <- a$SampleTime[seq(1, nrow(a), by = 3)]
+  bb$location <- rep(j, length(seq(1, nrow(a), by = 3)))
+  colnames(bb)[1] <- "sii"
+  storms_30[[iter2]] <- bb[c(2,3,1)]
+  print(as.character(j))
+}
+storms_30 <- plyr::rbind.fill(storms_30)
+
+###############################################
+unique(Speed$Segment)
+x <- filter(Speed, Segment == "4500 South", Direction == "Eastbound")
+storms_30
+storms_30 %>%
+  group_by()
 ```
 
 ```{r storm-table}
@@ -92,7 +162,7 @@ As found from UDOT’s RWIS sites, the data from days that snowfall took place w
 
 Traffic data were gathered using UDOT’s contract with Iteris through iPeMs. This data are collected with Bluetooth data that can be gathered from certain car brands. Iteris gathers this data for each route and for each 15-minute increment, where the average traffic speed is determined on the created route. The data were collected for each day the RWIS site reported there to be a snow storm. To assess the impacts of these storms on traffic speeds, a sample of normal weather days were taken during the same winter season to find average speeds that were not affected by weather. With this baseline average, the speeds during winter storms were compared and effects were determined.
 
-Crash reports were collected using UDOT’s contract with Numetric. These data were from a combination of police reports, UDOT safety reports, and other analyses of crashes. Crash information was collected for the analyzed routes for each day of a snow storm. The information gathered included milepost, crash severity, manner of collision, roadway junction type, light condition, weather condition, roadway surface condition, and number of vehicles involved. The crash severity was used as the main focal point of the analysis, with categories including no injury, possible injury, suspected minor injury, and suspected major injury for this dataset.
+Crash reports were collected using UDOT’s contract with Numetric. These data were from a combination of police reports, UDOT safety reports, and other analyses of crashes. Crash information was collected for the analyzed routes for each day of a snow storm. The information gathered included milepost, crash severity, manner of collision, roadway junction type, light condition, weather condition, roadway surface condition, and number of vehicles involved. The crash severity was used as the main focal point of the analysis, with categories including no injury, possible injury, suspected minor injury, and suspected major injury for this data set.
 
 **Analysis**
 

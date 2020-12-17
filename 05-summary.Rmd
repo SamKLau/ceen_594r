@@ -6,4 +6,4 @@ As the population within the state continues to grow, UDOT has continued to plac
 
 **Acknowledgment**
 
-The author thanks the Utah Department of Transportation for support and funding for this research. S. Lau downloaded and analyzed the data and wrote the text, M. Shoaf downloaded and helped analyze the data, D. Eggett helped perform statistical analysis on the data, and G. Schultz supervised the work and assisted as needed. A huge thanks to G. Macfarlane for his coaching and constant encouragment of learning R. The author actually knows something now about R!
+The author thanks the Utah Department of Transportation for support and funding for this research. S. Lau downloaded and analyzed the data and wrote the text, M. Shoaf downloaded and helped analyze the data, D. Eggett helped perform statistical analysis on the data, and G. Schultz supervised the work and assisted as needed. A big thanks to G. Macfarlane for his coaching and constant encouragment of learning R. The author actually knows something now about R!

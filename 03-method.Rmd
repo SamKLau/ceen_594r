@@ -5,36 +5,56 @@ editor_options:
 ---
 # Methods
 
+The data were collected from a variety of sources for this study to analyze storm severity and traffic speeds for arterials in the Salt Lake Valley. These arterials include West 9000 South, East 9000 South, Redwood Road, 700 East, and Foothill Drive. Figure 1 shows the location of the arterials. The data were collected for the 2019-2020 winter weather season. 
+
+**Data Types**
+
+The winter weather data was collected from UDOT’s Road Weather Information System (RWIS) locations. These sites are placed around Utah and are used to help understand weather and road conditions in various locations. Various information is gathered at these sites, such as wind speed, snowfall rate, air temperature, surface temperature, surface status, surface snow depth, and dew point. This information is gathered for each RWIS site every 10 minutes. These values are used by the organization to calculate a Storm Intensity Index (SII). A brief synopsis of these values is shown in Table \@ref(tab:storm-table). 
+
+```{r storm-table}
+datasummary_skim(Storm, title = "Distribution of Numeric Variables in Storm Data")
+```
+
+These SII values were categorized to show storm severity; “light” was defined as a SII value of less than 0.25, “moderate” was defined as SII values ranging from 0.25 to 1, and “heavy” was defined for any SII value over 1. These definitions for storm severity were given by UDOT weather employees and a summary of the data is shown in Table \@ref(tab:summaryofstormdata).
+
+```{r summaryofstormdata}
+datasummary_skim(Storm %>%select("Storm Rating"=Adj_Rating, RWIS_Site), 
+                 type="categorical", 
+                 title = "Distribution of Categorial Variables in Data")
+```
+
+As found from UDOT’s RWIS sites, the data from days that snowfall took place were downloaded from each of the RWIS sites that correlate to selected routes. The data was cleaned up using R. Weather personnel at UDOT suggested which RWIS sites to use for each route, which is included in the code below. Each route was broken into segments by UDOT maintenance sheds, to provide more accurate weather data for each part of a route.
+
+Traffic data were gathered using UDOT’s contract with Iteris through iPeMs. This data are collected with Bluetooth data that can be gathered from certain car brands. Iteris gathers this data for each route and for each 15-minute increment, where the average traffic speed is determined on the created route. The data were collected for each day the RWIS site reported there to be a snow storm. A summary of the data is found in Table \@ref(tab:speed-table). To assess the impacts of these storms on traffic speeds, a sample of normal weather days were taken during the same winter season to find average speeds that were not affected by weather. With this baseline average, the speeds during winter storms were compared and effects were determined. Overall statistical data can be found in Table \@ref(tab:summaryofspeeddata)
+
+
+```{r speed-table}
+datasummary_skim(Speed,
+                 title = "Distirbution of Numeric Varaibles in Speed Data")
+```
+
+```{r summaryofspeeddata}
+
+datasummary_skim(Speed %>%select(Segment, "Time of Day"=Time_Period, "Weather Type"=Date_Type),
+                 type = "categorical",
+                 title = "Distribution of Categorical Variables in Speed Data")
+
+```
+
+**Analysis**
+
+The analysis performed was done using the code below. This cleaned up the data and combined the dataset to provide a place for analysis to begin.
+
+
 ```{r setup}
 library(tidyverse)
 library(readxl)
 library(modelsummary)
 library(lubridate)
-
 ```
 
 
-
-We describe our methods in this chapter.
-
-
-Describe what data we have, and what it represents
-
-Cleaning up the Data:
-
-Storm data
-Average data into 30 minute increments (both snowfall rate and storm severity index; include data/time & RWIS Site)
-If both snowfall rate and storm severity index are 0, then get rid of it
-Reassign storm severity index for <.25 as light, .25-1 as moderate and >1 as heavy
-
-Speed Data
-Average the data into 30 min increments (speed, Date/time, segment, Time_Period, weather type)
-
-Table \@ref(tab:storm-table)
-
 ```{r ReadData} 
-#can put extra options in here, such as a figure title in the chunk options
-
 Storm <- read_xlsx("Data/Storm_Severity.xlsx")
 Speed <- read_xlsx("Data/iPeMs.xlsx")
 ```
@@ -66,10 +86,9 @@ speed_hour <- Speed %>%  mutate(
 ```
 
 ```{r crosswalk of speed to weather}
-#create csv in excel called Definition
 segment_xwalk <- tibble(
-  Segment = c("4500 South"),
-  RWIS_Site = c("I-15@2400S")
+  Segment = c("W 9000 S","E 9000 S","Redwood","Redwood","Redwood","700 E","700 E","Foothill"),
+  RWIS_Site = c("SR-85@DannonWay","I-15@6200S","I-15@6200S","I-15@500S","I-15@2400S","I-15@6200S","I-15@2400S","I-80@MouthofParleys")
 )
 
 segment_xwalk %>%
@@ -77,96 +96,3 @@ segment_xwalk %>%
   left_join(speed_hour, by = c("Segment","date","hour"))
 
 ```
-
-```{r claen_storms}
-####################################################
-storms_30 <- vector(mode = "list",length = length(unique(Storm$RWIS_Site)))
-iter2 <- 0
-for (j in unique(Storm$RWIS_Site)) {
-  iter2 <- iter2 + 1
-  a <- filter(Storm, RWIS_Site == j)
-  a <- a[c(1, 7, 14)]
-  b <- vector(length = length(seq(1, nrow(a), by = 3)))
-  iter <- 0
-  for (i in seq(1, nrow(a), by = 3)) {
-    iter <- iter + 1
-    b[iter] <- a$StormIntensityIndex[c(i:(i+2))] %>% mean()
-  }
-  bb <- as.data.frame(b)
-  bb$date <- a$SampleTime[seq(1, nrow(a), by = 3)]
-  bb$location <- rep(j, length(seq(1, nrow(a), by = 3)))
-  colnames(bb)[1] <- "sii"
-  storms_30[[iter2]] <- bb[c(2,3,1)]
-  print(as.character(j))
-}
-storms_30 <- plyr::rbind.fill(storms_30)
-
-###############################################
-unique(Speed$Segment)
-x <- filter(Speed, Segment == "4500 South", Direction == "Eastbound")
-storms_30
-storms_30 %>%
-  group_by()
-```
-
-```{r storm-table}
-#this is the table for the output data
-
-datasummary_skim(Storm, title = "Distribution of Numeric Variables in Storm Data")
-#shows mean, SD, min, median, max, histogram
-
-
-```
-
-```{r summaryofstormdata}
-
-#the title is the caption
-#put the comments above the figure being printed!
-datasummary_skim(Storm %>%select("Storm Rating"=Adj_Rating, RWIS_Site), 
-                 type="categorical", 
-                 title = "Distribution of Categorial Variables in Data")
-
-
-```
-
-```{r speed-table}
-
-datasummary_skim(Speed,
-                 title = "Distirbution of Numeric Varaibles in Storm Data")
-
-```
-
-```{r summaryofspeeddata}
-
-datasummary_skim(Speed %>%select(Segment, "Time of Day"=Time_Period, "Weather Type"=Date_Type),
-                 type = "categorical",
-                 title = "Distribution of Categorical Variables in Data")
-
-```
-
-##how to do a table without datasummary
-
-Define how segments line up with RWIS sites (TABLE HERE)
-
-|Threshold|Start Date|End Date|
-|---------|----------|--------|
-Can start a new row here
-
-The data were collected from a variety of sources for this study to analyze storm severity, traffic speeds, and crash rates for arterials in the Salt Lake Valley. These arterials include West 9000 South, East 9000 South, Redwood Road, 700 East, and Foothill Drive. Figure 1 shows the location of the arterials. The data were collected for the 2019-2020 winter weather season. 
-
-**Data Types**
-
-The winter weather data was collected from UDOT’s Road Weather Information System (RWIS) locations. These sites are placed around Utah and are used to help understand weather and road conditions in various locations. Various information is gathered at these sites, such as wind speed, snowfall rate, air temperature, surface temperature, surface status, surface snow depth, and dew point. This information is gathered for each RWIS site every 10 minutes. These values are used by the organization to calculate a Storm Intensity Index (SII). These SII values were categorized to show storm severity; “light” was defined as a SII value of less than 0.25, “moderate” was defined as SII values ranging from 0.25 to 1, and “heavy” was defined for any SII value over 1. These definitions for storm severity were given by UDOT weather employees.
-
-As found from UDOT’s RWIS sites, the data from days that snowfall took place were downloaded from each of the RWIS sites that correlate to selected routes. Weather personnel at UDOT suggested which RWIS sites to use for each route. Table 3 contains which routes correlate to the selected RWIS sites. Each route was broken into segments by UDOT maintenance sheds, to provide more accurate weather data for each part of a route.
-
-Traffic data were gathered using UDOT’s contract with Iteris through iPeMs. This data are collected with Bluetooth data that can be gathered from certain car brands. Iteris gathers this data for each route and for each 15-minute increment, where the average traffic speed is determined on the created route. The data were collected for each day the RWIS site reported there to be a snow storm. To assess the impacts of these storms on traffic speeds, a sample of normal weather days were taken during the same winter season to find average speeds that were not affected by weather. With this baseline average, the speeds during winter storms were compared and effects were determined.
-
-Crash reports were collected using UDOT’s contract with Numetric. These data were from a combination of police reports, UDOT safety reports, and other analyses of crashes. Crash information was collected for the analyzed routes for each day of a snow storm. The information gathered included milepost, crash severity, manner of collision, roadway junction type, light condition, weather condition, roadway surface condition, and number of vehicles involved. The crash severity was used as the main focal point of the analysis, with categories including no injury, possible injury, suspected minor injury, and suspected major injury for this data set.
-
-**Analysis**
-
-The analysis performed was done in statistical software. The datasets were correlated together to find results. Traffic speed data were used to compare normal versus snow days to determine the effect of snow storms on traffic speeds. Storm severity was then compared to weather data to determine the effects of levels of severity on traffic speeds.
-
-A similar analysis was done for crash data. Crash data were compared to weather data to analyze the frequency of crashes per storm severity level. The crash data were also compared with traffic data. The comparison of the three datasets showed the interaction between storm severity, traffic speed, and crash rates. 
-

@@ -40,7 +40,7 @@ Speed <- read_xlsx("Data/iPeMs.xlsx")
 ```
 
 
-```{r claen_storms}
+```{r clean_storms}
 storm_hour <- Storm %>%
   mutate(
     date = date(SampleTime),

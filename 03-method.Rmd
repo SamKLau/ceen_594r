@@ -15,6 +15,12 @@ library(lubridate)
 ```
 
 
+```{r ReadData} 
+Storm <- read_xlsx("Data/Storm_Severity.xlsx")
+Speed <- read_xlsx("Data/iPeMs.xlsx")
+```
+
+
 The data were collected from a variety of sources for this study to analyze storm severity and traffic speeds for arterials in the Salt Lake Valley. These arterials include West 9000 South, East 9000 South, Redwood Road, 700 East, and Foothill Drive. Figure 1 shows the location of the arterials. The data were collected for the 2019-2020 winter weather season. 
 
 **Data Types**
@@ -54,13 +60,6 @@ datasummary_skim(Speed %>%select(Segment, "Time of Day"=Time_Period, "Weather Ty
 **Analysis**
 
 The analysis performed was done using the code below. This cleaned up the data and combined the dataset to provide a place for analysis to begin.
-
-
-
-```{r ReadData} 
-Storm <- read_xlsx("Data/Storm_Severity.xlsx")
-Speed <- read_xlsx("Data/iPeMs.xlsx")
-```
 
 
 ```{r clean_storms}

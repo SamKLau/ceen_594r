@@ -166,18 +166,73 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="applications" class="section level1">
 <h1><span class="header-section-number">Chapter 5</span> Applications</h1>
-<p>Some <em>significant</em> applications are demonstrated in this chapter.</p>
-<p>The datasets were correlated together to find results. Traffic speed data were used to compare normal versus snow days to determine the effect of snow storms on traffic speeds. Storm severity was then compared to weather data to determine the effects of levels of severity on traffic speeds.</p>
-<p>A similar analysis was done for crash data. Crash data were compared to weather data to analyze the frequency of crashes per storm severity level. The crash data were also compared with traffic data. The comparison of the three datasets showed the interaction between storm severity, traffic speed, and crash rates.</p>
-<p>##Goal: Compare speed and storm data</p>
-<p>Compare normal v weather days with a t-test to find statistical significant differences
-**Show chart of this</p>
-<p>Correlate dates and times for routes &amp; RWIS sites</p>
-<p>Run avg speed per storm severity overall
-***Bar chart or table</p>
-<p>See variance on routes with speeds at different storm severity
-Maybe do another t-test here?
-**Table to show one segment and how speed changes over storm severity</p>
+<p>This is my attempt to figure out why my variables couldn’t be called in later R chunks.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="applications.html#cb21-1"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb21-2"><a href="applications.html#cb21-2"></a><span class="kw">library</span>(readxl)</span>
+<span id="cb21-3"><a href="applications.html#cb21-3"></a><span class="kw">library</span>(modelsummary)</span>
+<span id="cb21-4"><a href="applications.html#cb21-4"></a><span class="kw">library</span>(lubridate)</span>
+<span id="cb21-5"><a href="applications.html#cb21-5"></a></span>
+<span id="cb21-6"><a href="applications.html#cb21-6"></a>Storm &lt;-<span class="st"> </span><span class="kw">read_xlsx</span>(<span class="st">&quot;Data/Storm_Severity.xlsx&quot;</span>)</span>
+<span id="cb21-7"><a href="applications.html#cb21-7"></a>Speed &lt;-<span class="st"> </span><span class="kw">read_xlsx</span>(<span class="st">&quot;Data/iPeMs.xlsx&quot;</span>)</span>
+<span id="cb21-8"><a href="applications.html#cb21-8"></a></span>
+<span id="cb21-9"><a href="applications.html#cb21-9"></a>storm_hour &lt;-<span class="st"> </span>Storm <span class="op">%&gt;%</span></span>
+<span id="cb21-10"><a href="applications.html#cb21-10"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb21-11"><a href="applications.html#cb21-11"></a>    <span class="dt">date =</span> <span class="kw">date</span>(SampleTime),</span>
+<span id="cb21-12"><a href="applications.html#cb21-12"></a>    <span class="dt">hour =</span> <span class="kw">hour</span>(SampleTime)</span>
+<span id="cb21-13"><a href="applications.html#cb21-13"></a>  ) <span class="op">%&gt;%</span></span>
+<span id="cb21-14"><a href="applications.html#cb21-14"></a><span class="st">  </span><span class="kw">group_by</span>(RWIS_Site, date, hour) <span class="op">%&gt;%</span></span>
+<span id="cb21-15"><a href="applications.html#cb21-15"></a><span class="st">  </span><span class="kw">summarise</span>(</span>
+<span id="cb21-16"><a href="applications.html#cb21-16"></a>    <span class="dt">s_intensity =</span> <span class="kw">mean</span>(StormIntensityIndex, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</span>
+<span id="cb21-17"><a href="applications.html#cb21-17"></a>    <span class="dt">snowfall =</span> <span class="kw">mean</span>(SnowfallRate, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb21-18"><a href="applications.html#cb21-18"></a>  )</span></code></pre></div>
+<pre><code>## `summarise()` regrouping output by &#39;RWIS_Site&#39;, &#39;date&#39; (override with `.groups` argument)</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="applications.html#cb23-1"></a>speed_hour &lt;-<span class="st"> </span>Speed <span class="op">%&gt;%</span><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb23-2"><a href="applications.html#cb23-2"></a>    <span class="dt">date =</span> <span class="kw">date</span>(<span class="st">`</span><span class="dt">Date/Time</span><span class="st">`</span>),</span>
+<span id="cb23-3"><a href="applications.html#cb23-3"></a>    <span class="dt">hour =</span> <span class="kw">hour</span>(<span class="st">`</span><span class="dt">Date/Time</span><span class="st">`</span>)</span>
+<span id="cb23-4"><a href="applications.html#cb23-4"></a>  ) <span class="op">%&gt;%</span></span>
+<span id="cb23-5"><a href="applications.html#cb23-5"></a><span class="st">  </span><span class="kw">group_by</span>(Segment, date, hour) <span class="op">%&gt;%</span></span>
+<span id="cb23-6"><a href="applications.html#cb23-6"></a><span class="st">  </span><span class="kw">summarise</span>(</span>
+<span id="cb23-7"><a href="applications.html#cb23-7"></a>    <span class="dt">Speed =</span> <span class="kw">mean</span>(Speed, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</span>
+<span id="cb23-8"><a href="applications.html#cb23-8"></a>    <span class="dt">Speed_Limit =</span> <span class="kw">mean</span>(Speed_Limit, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb23-9"><a href="applications.html#cb23-9"></a>  )</span></code></pre></div>
+<pre><code>## `summarise()` regrouping output by &#39;Segment&#39;, &#39;date&#39; (override with `.groups` argument)</code></pre>
+<p>The datasets were correlated together to find results. Traffic speed data were used to compare normal versus snow days to determine the effect of snow storms on traffic speeds. Storm severity was then compared to weather data to determine the effects of levels of severity on traffic speeds. The comparison of the three datasets showed the interaction between storm severity, traffic speed, and crash rates.</p>
+<p>The code below shows what would have been a regression line if the code would allow me to figure out why it wasn’t calling out snowfall. I checked spelling and syntax, and tried to bring in the previous code, looked online, but with flying home today and other finals, this is the best I can do.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="applications.html#cb25-1"></a><span class="co">#ggplot(Storm, aes(x = snowfall, y = Speed, color = Speed)) +</span></span>
+<span id="cb25-2"><a href="applications.html#cb25-2"></a> <span class="co"># labs( x = &quot;Snowfall Amount per Hour&quot;, y = &quot;Traffic Speeds&quot;, title = &quot;Regression of Snowfall v Traffic Speed&quot;) +</span></span>
+<span id="cb25-3"><a href="applications.html#cb25-3"></a>  <span class="co">#geom_point() +</span></span>
+<span id="cb25-4"><a href="applications.html#cb25-4"></a>  <span class="co">#geom_smooth(method = lm)</span></span></code></pre></div>
+<p>Here is the code that was used as a cross walk between the two datasets.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="applications.html#cb26-1"></a>segment_xwalk &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
+<span id="cb26-2"><a href="applications.html#cb26-2"></a>  <span class="dt">Segment =</span> <span class="kw">c</span>(<span class="st">&quot;W 9000 S&quot;</span>,<span class="st">&quot;E 9000 S&quot;</span>,<span class="st">&quot;Redwood&quot;</span>,<span class="st">&quot;Redwood&quot;</span>,<span class="st">&quot;Redwood&quot;</span>,<span class="st">&quot;700 E&quot;</span>,<span class="st">&quot;700 E&quot;</span>,<span class="st">&quot;Foothill&quot;</span>),</span>
+<span id="cb26-3"><a href="applications.html#cb26-3"></a>  <span class="dt">RWIS_Site =</span> <span class="kw">c</span>(<span class="st">&quot;SR-85@DannonWay&quot;</span>,<span class="st">&quot;I-15@6200S&quot;</span>,<span class="st">&quot;I-15@6200S&quot;</span>,<span class="st">&quot;I-15@500S&quot;</span>,<span class="st">&quot;I-15@2400S&quot;</span>,<span class="st">&quot;I-15@6200S&quot;</span>,<span class="st">&quot;I-15@2400S&quot;</span>,<span class="st">&quot;I-80@MouthofParleys&quot;</span>)</span>
+<span id="cb26-4"><a href="applications.html#cb26-4"></a>)</span>
+<span id="cb26-5"><a href="applications.html#cb26-5"></a></span>
+<span id="cb26-6"><a href="applications.html#cb26-6"></a>segment_xwalk <span class="op">%&gt;%</span></span>
+<span id="cb26-7"><a href="applications.html#cb26-7"></a><span class="st">  </span><span class="kw">left_join</span>(storm_hour, <span class="dt">by =</span> <span class="st">&quot;RWIS_Site&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb26-8"><a href="applications.html#cb26-8"></a><span class="st">  </span><span class="kw">left_join</span>(speed_hour, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;Segment&quot;</span>,<span class="st">&quot;date&quot;</span>,<span class="st">&quot;hour&quot;</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 9,026 x 8
+##    Segment  RWIS_Site    date        hour s_intensity snowfall Speed Speed_Limit
+##    &lt;chr&gt;    &lt;chr&gt;        &lt;date&gt;     &lt;int&gt;       &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt;
+##  1 W 9000 S SR-85@Danno~ 2019-10-27     0           0   0       37.3          40
+##  2 W 9000 S SR-85@Danno~ 2019-10-27     1           0   0       38.4          40
+##  3 W 9000 S SR-85@Danno~ 2019-10-27     2           0   0       36.8          40
+##  4 W 9000 S SR-85@Danno~ 2019-10-27     3           0   0       37.6          40
+##  5 W 9000 S SR-85@Danno~ 2019-10-27     4           0   0       37.1          40
+##  6 W 9000 S SR-85@Danno~ 2019-10-27     5           0   0.0850  36.8          40
+##  7 W 9000 S SR-85@Danno~ 2019-10-27     6           0   0.198   36.7          40
+##  8 W 9000 S SR-85@Danno~ 2019-10-27     7           0   0       36            40
+##  9 W 9000 S SR-85@Danno~ 2019-10-27     8           0   0       36.4          40
+## 10 W 9000 S SR-85@Danno~ 2019-10-27     9           0   0       34.6          40
+## # ... with 9,016 more rows</code></pre>
+<p>Let’s try to perform a t-test on the data here. These t-tests were hoped to show the statistical evidence between 1) snowfall and speed and 2) storm intensity and speed. Again, this isn’t working, but at this point, I don’t know what else to do.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="applications.html#cb28-1"></a><span class="co">#t.test(snowfall, speed, paired=TRUE) </span></span>
+<span id="cb28-2"><a href="applications.html#cb28-2"></a></span>
+<span id="cb28-3"><a href="applications.html#cb28-3"></a><span class="co">#t.test(s_intensity, speed, paired = TRUE)</span></span></code></pre></div>
+<p>I would do some analysis that would show histograms for different areas.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="applications.html#cb29-1"></a><span class="co">#hist(Segment, speed)</span></span></code></pre></div>
+<p>The last thing I hoped to do was to run an ANOVA test on segments and RWIS Sites to determine the statistical difference of storm intensity within the different routes that are paired with RWIS sites. For the same set up, I hoped to also do snowfall.</p>
+<p>I know this isn’t great, but it’s the best I can do for now. Thank you for all your help.</p>
 
 </div>
             </section>

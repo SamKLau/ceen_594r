@@ -6,12 +6,15 @@ Some _significant_ applications are demonstrated in this chapter.
 
 ## Example two
 
+
+
+
 ##Goal: Compare speed and storm data
 
 Compare normal v weather days with a t-test to find statistical significant differences
 **Show chart of this
 
-Coorelate dates and times for routes & RWIS sites
+Correlate dates and times for routes & RWIS sites
 
 Run avg speed per storm severity overall
 ***Bar chart or table
